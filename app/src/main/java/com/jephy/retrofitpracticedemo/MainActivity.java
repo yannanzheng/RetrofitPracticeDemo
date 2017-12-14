@@ -44,15 +44,15 @@ public class MainActivity extends AppCompatActivity {
                         .addConverterFactory(GsonConverterFactory.create() )
                         .build();
 
-                GitHubService service = retrofit.create(GitHubService.class);
-                Call<MyResponse> repos = service.listRepos("1");
+                FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
+                Call<AllUpdateInfoResponse> repos = service.listRepos("1");
                 //                    Response<String> response = repos.execute();
-                repos.enqueue(new Callback<MyResponse>() {
+                repos.enqueue(new Callback<AllUpdateInfoResponse>() {
                     @Override
-                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                    public void onResponse(Call<AllUpdateInfoResponse> call, Response<AllUpdateInfoResponse> response) {
                         Log.d(TAG,"response = "+response);
                         int error = response.body().getError();
-                        List<MyResponse.VersionModel> versionModelList = response.body().getData();
+                        List<AllUpdateInfoResponse.VersionModel> versionModelList = response.body().getData();
 
                         Log.d(TAG,"error = "+error);
                         Log.d(TAG, "versionModelList = " + versionModelList);

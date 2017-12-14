@@ -9,9 +9,9 @@ import retrofit2.http.POST;
  * Created by jfyang on 12/14/17.
  */
 
-public interface GitHubService {
+public interface FirmwareUpdateService {
 
     @FormUrlEncoded
     @POST("index/updateInfoAll")
-    Call<MyResponse> listRepos(@Field("type") String type);
+    Call<AllUpdateInfoResponse> listRepos(@Field("type") String type);
 }

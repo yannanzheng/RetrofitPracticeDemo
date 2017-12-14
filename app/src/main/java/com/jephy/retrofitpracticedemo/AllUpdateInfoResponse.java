@@ -6,10 +6,8 @@ import java.util.List;
  * Created by jfyang on 12/14/17.
  */
 
-public class MyResponse {
-
+public class AllUpdateInfoResponse {
     int error;
-
     List<VersionModel> data;
 
     public int getError() {
