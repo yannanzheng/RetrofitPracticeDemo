@@ -37,20 +37,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     public MyViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-//        showMoreToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-////                Log.d(TAG, "点击下载条目: " + deviceModelName.getText().toString());
-//                Log.d(TAG, "isChecked =  " + isChecked);
-//                int adapterPosition = getAdapterPosition();
-//                if (isChecked) {
-//                    onSubItemClickListener.unFoldNewFeature(adapterPosition);
-//
-//                }else {
-//                    onSubItemClickListener.foldNewFeature(adapterPosition);
-//                }
-//            }
-//        });
     }
 
     @OnClick(R.id.download_firmware)
