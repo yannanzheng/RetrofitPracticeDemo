@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestFirmwareInfoAsync();
+//        requestFirmwareInfoAsync();
+        requestFirmwareInfoSync();
     }
 
     @NonNull
@@ -52,4 +54,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void requestFirmwareInfoSync() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.0.77:100/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
+                Call<AllUpdateInfoResponse> request = service.listRepos("1");
+                //                    Response<String> response = repos.execute();
+
+                try {
+                    Response<AllUpdateInfoResponse> response = request.execute();
+                    Log.d(TAG, "error = " + response.body().getError());
+                    Log.d(TAG, "versionModelList = " + response.body().getData());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 }
