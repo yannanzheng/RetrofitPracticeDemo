@@ -5,12 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,40 +21,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        retrofitRequest();
+        requestFirmwareInfoAsync();
     }
 
     @NonNull
-    private void retrofitRequest() {
-         new Thread(new Runnable() {
+    private void requestFirmwareInfoAsync() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.77:100/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
+        Call<AllUpdateInfoResponse> repos = service.listRepos("1");
+        //                    Response<String> response = repos.execute();
+        repos.enqueue(new Callback<AllUpdateInfoResponse>() {
             @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.0.77:100/")
-                        .addConverterFactory(GsonConverterFactory.create() )
-                        .build();
+            public void onResponse(Call<AllUpdateInfoResponse> call, Response<AllUpdateInfoResponse> response) {
+                Log.d(TAG, "response = " + response);
+                int error = response.body().getError();
+                List<AllUpdateInfoResponse.VersionModel> versionModelList = response.body().getData();
 
-                FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
-                Call<AllUpdateInfoResponse> repos = service.listRepos("1");
-                //                    Response<String> response = repos.execute();
-                repos.enqueue(new Callback<AllUpdateInfoResponse>() {
-                    @Override
-                    public void onResponse(Call<AllUpdateInfoResponse> call, Response<AllUpdateInfoResponse> response) {
-                        Log.d(TAG,"response = "+response);
-                        int error = response.body().getError();
-                        List<AllUpdateInfoResponse.VersionModel> versionModelList = response.body().getData();
-
-                        Log.d(TAG,"error = "+error);
-                        Log.d(TAG, "versionModelList = " + versionModelList);
-                    }
-
-                    @Override
-
-                    public void onFailure(Call call, Throwable t) {
-                        Log.d(TAG,"t = "+t);
-                    }
-                });
+                Log.d(TAG, "error = " + error);
+                Log.d(TAG, "versionModelList = " + versionModelList);
             }
-        }).start();
+
+            @Override
+
+            public void onFailure(Call call, Throwable t) {
+                Log.d(TAG, "t = " + t);
+            }
+        });
     }
 }
