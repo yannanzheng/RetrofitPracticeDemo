@@ -10,20 +10,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirmwareUpdateView{
     private static final String TAG = "MyMainActivity";
     private static final String requestURL = "http://192.168.0.77:100/index/updateInfoAll";
     private RecyclerView recyclerView;
+
+    private FirmwareInfoPresenter firmwareInfoPresenter = new FirmwareInfoPresenter(this);
+    private MyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,63 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new MyAdapter(MainActivity.this));
+        mAdapter = new MyAdapter(MainActivity.this);
+        recyclerView.setAdapter(mAdapter);
 
-        requestFirmwareInfoSync();
+//        requestFirmwareInfoSync();
+        firmwareInfoPresenter.fetchFirmwareInfo();
     }
 
-    @NonNull
-    private void requestFirmwareInfoAsync() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.77:100/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
-        Call<AllUpdateInfoResponse> repos = service.listRepos("1");
-        //                    Response<String> response = repos.execute();
-        repos.enqueue(new Callback<AllUpdateInfoResponse>() {
-            @Override
-            public void onResponse(Call<AllUpdateInfoResponse> call, Response<AllUpdateInfoResponse> response) {
-                Log.d(TAG, "response = " + response);
-                int error = response.body().getError();
-                List<FirmwareVersionModel> firmwareVersionModelList = response.body().getData();
-
-                Log.d(TAG, "error = " + error);
-                Log.d(TAG, "versionModelList = " + firmwareVersionModelList);
-            }
-
-            @Override
-
-            public void onFailure(Call call, Throwable t) {
-                Log.d(TAG, "t = " + t);
-            }
-        });
-    }
-
-    private void requestFirmwareInfoSync() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://192.168.0.77:100/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
-                Call<AllUpdateInfoResponse> request = service.listRepos("1");
-                //                    Response<String> response = repos.execute();
-
-                try {
-                    Response<AllUpdateInfoResponse> response = request.execute();
-                    Log.d(TAG, "error = " + response.body().getError());
-                    Log.d(TAG, "versionModelList = " + response.body().getData());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    @Override
+    public void onUpdateInfoFetched(List<FirmwareVersionModel> firmwareVersionModelList) {
+        mAdapter.setNewData(firmwareVersionModelList);
+        mAdapter.notifyDataSetChanged();
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -102,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         public MyAdapter(Context mContext) {
             this.mContext = mContext;
             this.mLayoutInflater = LayoutInflater.from(mContext);
-            this.firmwareVersionModelList = firmwareVersionModelList;
         }
 
         @Override
@@ -115,20 +79,45 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-
+            holder.deviceModelName.setText(position + "");
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            if (null != firmwareVersionModelList) {
+                return firmwareVersionModelList.size();
+            }
+            return 0;
+        }
+
+        public void setNewData(List<FirmwareVersionModel> newData) {
+            this.firmwareVersionModelList = newData;
         }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.device_model_name)
+        TextView deviceModelName;
 
+        @BindView(R.id.device_connect_state_tv)
+        TextView deviceConntectState;
+
+        @BindView(R.id.version)
+        TextView version;
+
+        @BindView(R.id.new_feature_container)
+        LinearLayout newFeatureContainer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.download_firmware)
+        public void download(View view) {
+
+            Log.d(TAG, "点击下载条目: " + deviceModelName.getText().toString());
+        }
+
     }
 }
