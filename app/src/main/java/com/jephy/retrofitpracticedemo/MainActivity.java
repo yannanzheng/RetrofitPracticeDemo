@@ -30,7 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements FirmwareUpdateView{
     private static final String TAG = "MyMainActivity";
-    private static final String requestURL = "http://192.168.0.77:100/index/updateInfoAll";
     private RecyclerView recyclerView;
 
     private FirmwareInfoPresenter firmwareInfoPresenter = new FirmwareInfoPresenter(this);
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        requestFirmwareInfoAsync();
         recyclerView = findViewById(R.id.recycler_list_view);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
         mAdapter = new MyAdapter(MainActivity.this);
         recyclerView.setAdapter(mAdapter);
 
-//        requestFirmwareInfoSync();
         firmwareInfoPresenter.fetchFirmwareInfo();
     }
 
@@ -115,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
 
         @OnClick(R.id.download_firmware)
         public void download(View view) {
-
             Log.d(TAG, "点击下载条目: " + deviceModelName.getText().toString());
         }
 

@@ -51,8 +51,6 @@ class FirmwareInfoPresenter {
                     view.onUpdateInfoFetched(firmwareVersionModelList);
                 }
 
-
-
                 Log.d(TAG, "error = " + error);
                 Log.d(TAG, "versionModelList = " + firmwareVersionModelList);
             }
