@@ -33,4 +33,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.4'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 }
