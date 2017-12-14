@@ -27,12 +27,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        normalRequest();
         retrofitRequest();
-
     }
-
 
     @NonNull
     private void retrofitRequest() {
@@ -64,39 +60,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG,"t = "+t);
                     }
                 });
-
-                //                Log.d(TAG,"repos = "+repos.toString() );
-            }
-        }).start();
-    }
-
-
-    private void normalRequest() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                URL url = null;
-                try {
-                    url = new URL(requestURL);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setRequestProperty("type", "1");
-                    int responseCode = httpURLConnection.getResponseCode();
-                    Log.d(TAG, "responseCode = " + responseCode);
-                    InputStream inputStream = httpURLConnection.getInputStream();
-                    byte[] data = new byte[10000];
-                    int read = inputStream.read(data);
-                    Log.d(TAG, "read.lenght = " + read);
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
             }
         }).start();
     }
