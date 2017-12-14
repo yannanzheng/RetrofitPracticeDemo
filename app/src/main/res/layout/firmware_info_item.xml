@@ -58,29 +58,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/new_feature_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/cycle_dot_blue"
-            android:drawablePadding="6dp"
-            android:text="增加美颜功能" />
+        <!--<TextView-->
+            <!--android:id="@+id/new_feature_1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@drawable/cycle_dot_blue"-->
+            <!--android:drawablePadding="6dp"-->
+            <!--android:text="增加美颜功能" />-->
 
-        <TextView
-            android:id="@+id/new_feature_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/cycle_dot_blue"
-            android:drawablePadding="6dp"
-            android:text="增加美颜功能" />
+        <!--<TextView-->
+            <!--android:id="@+id/new_feature_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@drawable/cycle_dot_blue"-->
+            <!--android:drawablePadding="6dp"-->
+            <!--android:text="增加美颜功能" />-->
 
-        <TextView
-            android:id="@+id/new_feature_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/cycle_dot_blue"
-            android:drawablePadding="6dp"
-            android:text="增加美颜功能" />
+        <!--<TextView-->
+            <!--android:id="@+id/new_feature_3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@drawable/cycle_dot_blue"-->
+            <!--android:drawablePadding="6dp"-->
+            <!--android:text="增加美颜功能" />-->
 
     </LinearLayout>
 

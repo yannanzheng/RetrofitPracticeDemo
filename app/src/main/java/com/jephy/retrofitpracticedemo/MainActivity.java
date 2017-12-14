@@ -66,7 +66,23 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.deviceModelName.setText(position + "");
+            FirmwareVersionModel firmwareVersionModel = firmwareVersionModelList.get(position);
+            holder.deviceModelName.setText(firmwareVersionModel.getProductmodel());
+            holder.version.setText(firmwareVersionModel.getLatestVersion());
+            List<String> msg = firmwareVersionModel.msg;
+//            ArrayList<TextView> featureTextViews = new ArrayList<>();
+
+            for (int i = 0; i < msg.size(); i++) {
+                TextView textView = new TextView(mContext);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.cycle_dot_blue, 0, 0, 0);
+                textView.setCompoundDrawablePadding(6);
+//                featureTextViews.add(textView);
+                holder.newFeatureContainer.addView(textView);
+            }
+
+//            holder.newFeatureContainer.addView();
+
         }
 
         @Override
