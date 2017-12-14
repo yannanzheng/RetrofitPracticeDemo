@@ -84,12 +84,15 @@
 
     </LinearLayout>
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/show_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:background="@null"
         android:text="更多"
+        android:textOn="收起"
+        android:textOff="更多"
         android:textColor="#5abbff"
         android:textSize="12sp" />
 

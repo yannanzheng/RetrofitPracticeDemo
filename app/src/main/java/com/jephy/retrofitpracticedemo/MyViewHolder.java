@@ -3,11 +3,15 @@ package com.jephy.retrofitpracticedemo;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -28,11 +32,25 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     LinearLayout newFeatureContainer;
 
     @BindView(R.id.show_more)
-    TextView showMoreTextView;
+    CheckedTextView showMoreToggleButton;
 
     public MyViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+//        showMoreToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+////                Log.d(TAG, "点击下载条目: " + deviceModelName.getText().toString());
+//                Log.d(TAG, "isChecked =  " + isChecked);
+//                int adapterPosition = getAdapterPosition();
+//                if (isChecked) {
+//                    onSubItemClickListener.unFoldNewFeature(adapterPosition);
+//
+//                }else {
+//                    onSubItemClickListener.foldNewFeature(adapterPosition);
+//                }
+//            }
+//        });
     }
 
     @OnClick(R.id.download_firmware)
@@ -43,16 +61,15 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.show_more)
     public void showMoreFeature(View view) {
         int adapterPosition = getAdapterPosition();
-        if ("更多".equals(showMoreTextView.getText().toString().trim())) {
+        if (showMoreToggleButton.isChecked()) {
             onSubItemClickListener.unFoldNewFeature(adapterPosition);
-            showMoreTextView.setText("收起");
+            showMoreToggleButton.setChecked(false);
+            showMoreToggleButton.setText("收起");
         }else {
             onSubItemClickListener.foldNewFeature(adapterPosition);
-            showMoreTextView.setText("更多");
+            showMoreToggleButton.setChecked(true);
+            showMoreToggleButton.setText("更多");
         }
-
-        Log.d(TAG, "点击显示更多: " );
-
     }
 
     private OnSubItemClickListener onSubItemClickListener;
