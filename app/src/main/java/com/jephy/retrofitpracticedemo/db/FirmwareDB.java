@@ -33,9 +33,9 @@ public class FirmwareDB extends RealmObject {
      */
     private String localUrl;
 
-    private RealmList<String> msgEnList;
-    private RealmList<String> msgCNList;
-    private RealmList<String> msgTWList;
+    private RealmList<String> msgEnList = new RealmList<>();
+    private RealmList<String> msgCNList = new RealmList<>();
+    private RealmList<String> msgTWList = new RealmList<>();
 
     public FirmwareDB() {
     }
@@ -127,5 +127,22 @@ public class FirmwareDB extends RealmObject {
 
     public void setMsgTWList(RealmList<String> msgTWList) {
         this.msgTWList = msgTWList;
+    }
+
+    @Override
+    public String toString() {
+        return "FirmwareDB{" +
+                "productnum='" + productnum + '\'' +
+                ", productmodel='" + productmodel + '\'' +
+                ", subproductmodel='" + subproductmodel + '\'' +
+                ", baseline=" + baseline +
+                ", latestVersion='" + latestVersion + '\'' +
+                ", md5='" + md5 + '\'' +
+                ", url='" + url + '\'' +
+                ", localUrl='" + localUrl + '\'' +
+                ", msgEnList=" + msgEnList +
+                ", msgCNList=" + msgCNList +
+                ", msgTWList=" + msgTWList +
+                '}';
     }
 }

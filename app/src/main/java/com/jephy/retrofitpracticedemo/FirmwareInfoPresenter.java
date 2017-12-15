@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.jephy.retrofitpracticedemo.db.FirmwareDB;
+import com.jephy.retrofitpracticedemo.db.FirmwareDao;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
@@ -59,7 +60,7 @@ class FirmwareInfoPresenter {
                 Log.d(TAG, "versionModelList = " + firmwareVersionModelList);
 
 
-                saveOrUpdateFirmwareInfo(firmwareVersionModelList);
+                FirmwareDao.saveOrUpdateFirmwareInfo(firmwareVersionModelList);
 
 //                FirmwareUpdateViewrmwareDB firmwareDB = new FirmwareDB();
 //                firmwareDB.
@@ -76,25 +77,6 @@ class FirmwareInfoPresenter {
         });
     }
 
-    private void saveOrUpdateFirmwareInfo(List<FirmwareVersionModel> firmwareVersionModelList) {
-
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-        for (FirmwareVersionModel firmwareVersionModel : firmwareVersionModelList) {
-            FirmwareDB firmwareDB = new FirmwareDB();
-            firmwareDB.setBaseline(firmwareVersionModel.getBaseline());
-            firmwareDB.setLatestVersion(firmwareVersionModel.getLatestVersion());
-            firmwareDB.setMd5(firmwareVersionModel.getMd5());
-            firmwareDB.setProductnum(firmwareVersionModel.getProductnum());
-
-            realm.copyToRealm(firmwareDB);
-        }
-        realm.commitTransaction();
-
-        RealmResults<FirmwareDB> firmwareDBS = realm.where(FirmwareDB.class).findAll();
-        Log.d(TAG, "firmwareDBS.size() = " + firmwareDBS.size());
-    }
 
     private void requestFirmwareInfoSync() {
         new Thread(new Runnable() {

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by jfyang on 12/14/17.
  */
-class FirmwareVersionModel {
+public class FirmwareVersionModel {
 
     String productnum;
     String productmodel;
