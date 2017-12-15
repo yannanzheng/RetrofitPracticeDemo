@@ -1,11 +1,11 @@
-package com.jephy.retrofitpracticedemo.web;
+package com.jephy.retrofitpracticedemo.model;
 
 import java.util.List;
 
 /**
  * Created by jfyang on 12/14/17.
  */
-public class FirmwareVersionModel {
+public class Firmware {
 
     String productnum;
     String productmodel;

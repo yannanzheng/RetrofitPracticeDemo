@@ -13,5 +13,5 @@ public interface FirmwareUpdateService {
 
     @FormUrlEncoded
     @POST("index/updateInfoAll")
-    Call<AllUpdateInfoResponse> listRepos(@Field("type") String type);
+    Call<FirmwareUpgradeResponse> listRepos(@Field("type") String type);
 }

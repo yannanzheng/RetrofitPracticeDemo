@@ -1,6 +1,6 @@
 package com.jephy.retrofitpracticedemo.db;
 
-import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+import com.jephy.retrofitpracticedemo.model.Firmware;
 
 import java.util.List;
 
@@ -150,18 +150,18 @@ public class FirmwareDB extends RealmObject {
                 '}';
     }
 
-    public void copyFieldFrom(FirmwareVersionModel firmwareVersionModel) {
-        setProductnum(firmwareVersionModel.getProductnum());
-        setProductmodel(firmwareVersionModel.getProductmodel());
-        setSubproductmodel(firmwareVersionModel.getSubproductmodel());
-        setBaseline(firmwareVersionModel.getBaseline());
-        setLatestVersion(firmwareVersionModel.getLatestVersion());
-        setMd5(firmwareVersionModel.getMd5());
-        setUrl(firmwareVersionModel.getUrl());
+    public void copyFieldFrom(Firmware firmware) {
+        setProductnum(firmware.getProductnum());
+        setProductmodel(firmware.getProductmodel());
+        setSubproductmodel(firmware.getSubproductmodel());
+        setBaseline(firmware.getBaseline());
+        setLatestVersion(firmware.getLatestVersion());
+        setMd5(firmware.getMd5());
+        setUrl(firmware.getUrl());
 
-        List<String> msgStringList = firmwareVersionModel.getMsg();
-        List<String> msgEnStringList = firmwareVersionModel.getMsg_en();
-        List<String> msgTWStringList = firmwareVersionModel.getMsg_tw();
+        List<String> msgStringList = firmware.getMsg();
+        List<String> msgEnStringList = firmware.getMsg_en();
+        List<String> msgTWStringList = firmware.getMsg_tw();
         addMessage(msgCNList,msgStringList);
         addMessage(msgEnList,msgEnStringList);
         addMessage(msgTWList,msgTWStringList);

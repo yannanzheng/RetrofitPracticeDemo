@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+import com.jephy.retrofitpracticedemo.db.FeatureMessageItem;
+import com.jephy.retrofitpracticedemo.db.FirmwareDB;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private MainActivity mainActivity;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
-    private List<FirmwareVersionModel> firmwareVersionModelList;
+    private List<FirmwareDB> firmwareVersionModelList;
 
     public MyAdapter(MainActivity mainActivity, Context mContext) {
         this.mainActivity = mainActivity;
@@ -40,28 +41,28 @@ class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        FirmwareVersionModel firmwareVersionModel = firmwareVersionModelList.get(position);
+        FirmwareDB firmwareVersionModel = firmwareVersionModelList.get(position);
         holder.deviceModelName.setText(firmwareVersionModel.getProductmodel());
         holder.version.setText(firmwareVersionModel.getLatestVersion());
-        final List<String> msg = firmwareVersionModel.getMsg();
+        final List<FeatureMessageItem> msgCNList = firmwareVersionModel.getMsgCNList();
 
-        showNewFeatureItems(holder, msg, true);
+        showNewFeatureItems(holder, msgCNList, true);
         holder.setOnSubItemClickListener(new MyViewHolder.OnSubItemClickListener() {
             @Override
             public void unFoldNewFeature(int position) {
                 Log.d(TAG, "点击展开更多条目: " + position);
-                showNewFeatureItems(holder, msg, false);
+                showNewFeatureItems(holder, msgCNList, false);
             }
 
             @Override
             public void foldNewFeature(int position) {
-                showNewFeatureItems(holder, msg, true);
+                showNewFeatureItems(holder, msgCNList, true);
             }
         });
     }
 
-    private void showNewFeatureItems(MyViewHolder holder, List<String> msg, boolean shouldFold) {
-        int showNewFeatureItemNumber = msg.size();
+    private void showNewFeatureItems(MyViewHolder holder, List<FeatureMessageItem> messageItemList, boolean shouldFold) {
+        int showNewFeatureItemNumber = messageItemList.size();
         if (shouldFold && showNewFeatureItemNumber > 3) {
             showNewFeatureItemNumber = 3;
         }
@@ -73,7 +74,7 @@ class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.cycle_dot_blue, 0, 0, 0);
             textView.setCompoundDrawablePadding(6);
-            textView.setText(msg.get(i));
+            textView.setText(messageItemList.get(i).getMsg());
             holder.newFeatureContainer.addView(textView);
         }
     }
@@ -86,7 +87,7 @@ class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return 0;
     }
 
-    public void setNewData(List<FirmwareVersionModel> newData) {
+    public void setNewData(List<FirmwareDB> newData) {
         this.firmwareVersionModelList = newData;
     }
 }

@@ -2,6 +2,8 @@ package com.jephy.retrofitpracticedemo.web;
 
 import android.util.Log;
 
+import com.jephy.retrofitpracticedemo.model.Firmware;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -18,16 +20,16 @@ public class FirmwareWebDao {
 
     private static final String TAG = "FirmwareWebDao";
 
-    public static List<FirmwareVersionModel> requestFirmwareInfoSync() {
+    public static List<Firmware> requestFirmwareInfoSync() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.77:100/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         FirmwareUpdateService service = retrofit.create(FirmwareUpdateService.class);
-        Call<AllUpdateInfoResponse> request = service.listRepos("1");
+        Call<FirmwareUpgradeResponse> request = service.listRepos("1");
         try {
-            Response<AllUpdateInfoResponse> response = request.execute();
+            Response<FirmwareUpgradeResponse> response = request.execute();
             Log.d(TAG, "error = " + response.body().getError());
             Log.d(TAG, "versionModelList = " + response.body().getData());
             return response.body().getData();

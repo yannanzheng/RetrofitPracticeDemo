@@ -1,6 +1,6 @@
 package com.jephy.retrofitpracticedemo;
 
-import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+import com.jephy.retrofitpracticedemo.db.FirmwareDB;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 interface FirmwareUpdateView {
-    void onUpdateInfoFetched(List<FirmwareVersionModel> firmwareVersionModelList);
+    void onUpdateInfoFetched(List<FirmwareDB> firmwareDBList);
 }

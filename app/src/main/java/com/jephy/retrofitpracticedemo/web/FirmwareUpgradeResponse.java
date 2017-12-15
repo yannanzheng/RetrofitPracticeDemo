@@ -1,14 +1,16 @@
 package com.jephy.retrofitpracticedemo.web;
 
+import com.jephy.retrofitpracticedemo.model.Firmware;
+
 import java.util.List;
 
 /**
  * Created by jfyang on 12/14/17.
  */
 
-public class AllUpdateInfoResponse {
+public class FirmwareUpgradeResponse {
     int error;
-    List<FirmwareVersionModel> data;
+    List<Firmware> data;
 
     public int getError() {
         return error;
@@ -18,11 +20,11 @@ public class AllUpdateInfoResponse {
         this.error = error;
     }
 
-    public List<FirmwareVersionModel> getData() {
+    public List<Firmware> getData() {
         return data;
     }
 
-    public void setData(List<FirmwareVersionModel> data) {
+    public void setData(List<Firmware> data) {
         this.data = data;
     }
 

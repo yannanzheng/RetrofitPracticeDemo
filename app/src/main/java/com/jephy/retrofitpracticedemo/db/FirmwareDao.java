@@ -3,8 +3,9 @@ package com.jephy.retrofitpracticedemo.db;
 import android.util.Log;
 
 
-import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+import com.jephy.retrofitpracticedemo.model.Firmware;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -17,16 +18,16 @@ import io.realm.RealmResults;
 public class FirmwareDao {
     private static String TAG = "FirmwareDao";
 
-    public static void saveOrUpdateAllFirmwareInfo(List<FirmwareVersionModel> firmwareVersionModelList) {
+    public static void saveOrUpdateAllFirmwareInfo(List<Firmware> firmwareList) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.where(FirmwareDB.class).findAll().deleteAllFromRealm();
         realm.commitTransaction();
 
         realm.beginTransaction();
-        for (FirmwareVersionModel firmwareVersionModel : firmwareVersionModelList) {
+        for (Firmware firmware : firmwareList) {
             FirmwareDB firmwareDB = new FirmwareDB();
-            firmwareDB.copyFieldFrom(firmwareVersionModel);
+            firmwareDB.copyFieldFrom(firmware);
             realm.copyToRealm(firmwareDB);
 
         }
@@ -38,5 +39,17 @@ public class FirmwareDao {
             Log.d(TAG, "firmwareDB = " + firmwareDB.toString()+", messageCN = "+firmwareDB.getMsgCNList().toString());
         }
 
+    }
+
+    public static List<FirmwareDB> findAll() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<FirmwareDB> firmwareDBS = realm.where(FirmwareDB.class).findAll();
+        if (firmwareDBS != null) {
+            List<FirmwareDB> firmwareVersionModelList = new ArrayList<>();
+            firmwareVersionModelList.addAll(firmwareDBS);
+            return firmwareVersionModelList;
+        }
+
+        return null;
     }
 }
