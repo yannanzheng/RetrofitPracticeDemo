@@ -17,7 +17,7 @@ import io.realm.RealmResults;
 public class FirmwareDao {
     private static String TAG = "FirmwareDao";
 
-    public static void saveOrUpdateFirmwareInfo(List<FirmwareVersionModel> firmwareVersionModelList) {
+    public static void saveOrUpdateAllFirmwareInfo(List<FirmwareVersionModel> firmwareVersionModelList) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.where(FirmwareDB.class).findAll().deleteAllFromRealm();
@@ -26,32 +26,9 @@ public class FirmwareDao {
         realm.beginTransaction();
         for (FirmwareVersionModel firmwareVersionModel : firmwareVersionModelList) {
             FirmwareDB firmwareDB = new FirmwareDB();
-            firmwareDB.setBaseline(firmwareVersionModel.getBaseline());
-            firmwareDB.setLatestVersion(firmwareVersionModel.getLatestVersion());
-            firmwareDB.setMd5(firmwareVersionModel.getMd5());
-            firmwareDB.setProductnum(firmwareVersionModel.getProductnum());
-            firmwareDB.setProductmodel(firmwareVersionModel.getProductmodel());
-            firmwareDB.setSubproductmodel(firmwareVersionModel.getSubproductmodel());
-            firmwareDB.setUrl(firmwareVersionModel.getUrl());
-            List<String> msgs = firmwareVersionModel.getMsg();
-
-            List<String> msg_ens = firmwareVersionModel.getMsg_en();
-
-            List<String> msg_tws = firmwareVersionModel.getMsg_tw();
-
-            for (String msgCN : msgs) {
-                firmwareDB.getMsgCNList().add(new FeatureMessageItem(msgCN));
-            }
-
-            for (String msgTW: msg_tws){
-                firmwareDB.getMsgTWList().add(new FeatureMessageItem(msgTW));
-            }
-
-            for (String msgEN : msg_ens) {
-                firmwareDB.getMsgEnList().add(new FeatureMessageItem(msgEN));
-            }
-
+            firmwareDB.copyFieldFrom(firmwareVersionModel);
             realm.copyToRealm(firmwareDB);
+
         }
         realm.commitTransaction();
 

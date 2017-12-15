@@ -64,7 +64,7 @@ public class FirmwareWebDao {
 //                Log.d(TAG, "versionModelList = " + firmwareVersionModelList);
 //
 //
-//                FirmwareDao.saveOrUpdateFirmwareInfo(firmwareVersionModelList);
+//                FirmwareDao.saveOrUpdateAllFirmwareInfo(firmwareVersionModelList);
 //            }
 //
 //            @Override

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
     private static final String TAG = "MyMainActivity";
     private RecyclerView recyclerView;
 
-    private FirmwareInfoPresenter firmwareInfoPresenter = new FirmwareInfoPresenter(this);
+    private FirmwareInfoPresenter firmwareInfoPresenter = new FirmwareInfoPresenter(MainActivity.this,this);
     private MyAdapter mAdapter;
 
     @Override

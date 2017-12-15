@@ -1,5 +1,9 @@
 package com.jephy.retrofitpracticedemo.db;
 
+import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+
+import java.util.List;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -144,5 +148,28 @@ public class FirmwareDB extends RealmObject {
                 ", msgCNList=" + msgCNList +
                 ", msgTWList=" + msgTWList +
                 '}';
+    }
+
+    public void copyFieldFrom(FirmwareVersionModel firmwareVersionModel) {
+        setProductnum(firmwareVersionModel.getProductnum());
+        setProductmodel(firmwareVersionModel.getProductmodel());
+        setSubproductmodel(firmwareVersionModel.getSubproductmodel());
+        setBaseline(firmwareVersionModel.getBaseline());
+        setLatestVersion(firmwareVersionModel.getLatestVersion());
+        setMd5(firmwareVersionModel.getMd5());
+        setUrl(firmwareVersionModel.getUrl());
+
+        List<String> msgStringList = firmwareVersionModel.getMsg();
+        List<String> msgEnStringList = firmwareVersionModel.getMsg_en();
+        List<String> msgTWStringList = firmwareVersionModel.getMsg_tw();
+        addMessage(msgCNList,msgStringList);
+        addMessage(msgEnList,msgEnStringList);
+        addMessage(msgTWList,msgTWStringList);
+    }
+
+    private void addMessage(RealmList msgDBList, List<String> msgList) {
+        for (String msg : msgList) {
+            msgDBList.add(new FeatureMessageItem(msg));
+        }
     }
 }
