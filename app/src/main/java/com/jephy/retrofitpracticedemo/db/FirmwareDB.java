@@ -33,9 +33,9 @@ public class FirmwareDB extends RealmObject {
      */
     private String localUrl;
 
-    private RealmList<String> msgEnList = new RealmList<>();
-    private RealmList<String> msgCNList = new RealmList<>();
-    private RealmList<String> msgTWList = new RealmList<>();
+    private RealmList<FeatureMessageItem> msgEnList = new RealmList<>();
+    private RealmList<FeatureMessageItem> msgCNList = new RealmList<>();
+    private RealmList<FeatureMessageItem> msgTWList = new RealmList<>();
 
     public FirmwareDB() {
     }
@@ -105,27 +105,27 @@ public class FirmwareDB extends RealmObject {
         this.localUrl = localUrl;
     }
 
-    public RealmList<String> getMsgEnList() {
+    public RealmList<FeatureMessageItem> getMsgEnList() {
         return msgEnList;
     }
 
-    public void setMsgEnList(RealmList<String> msgEnList) {
+    public void setMsgEnList(RealmList<FeatureMessageItem> msgEnList) {
         this.msgEnList = msgEnList;
     }
 
-    public RealmList<String> getMsgCNList() {
+    public RealmList<FeatureMessageItem> getMsgCNList() {
         return msgCNList;
     }
 
-    public void setMsgCNList(RealmList<String> msgCNList) {
+    public void setMsgCNList(RealmList<FeatureMessageItem> msgCNList) {
         this.msgCNList = msgCNList;
     }
 
-    public RealmList<String> getMsgTWList() {
+    public RealmList<FeatureMessageItem> getMsgTWList() {
         return msgTWList;
     }
 
-    public void setMsgTWList(RealmList<String> msgTWList) {
+    public void setMsgTWList(RealmList<FeatureMessageItem> msgTWList) {
         this.msgTWList = msgTWList;
     }
 

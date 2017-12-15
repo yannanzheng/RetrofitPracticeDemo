@@ -1,4 +1,4 @@
-package com.jephy.retrofitpracticedemo;
+package com.jephy.retrofitpracticedemo.web;
 
 import retrofit2.*;
 import retrofit2.http.Field;

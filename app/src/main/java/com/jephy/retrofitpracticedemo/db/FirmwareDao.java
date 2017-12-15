@@ -3,7 +3,7 @@ package com.jephy.retrofitpracticedemo.db;
 import android.util.Log;
 
 
-import com.jephy.retrofitpracticedemo.FirmwareVersionModel;
+import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ public class FirmwareDao {
     private static String TAG = "FirmwareDao";
 
     public static void saveOrUpdateFirmwareInfo(List<FirmwareVersionModel> firmwareVersionModelList) {
-
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.where(FirmwareDB.class).findAll().deleteAllFromRealm();
@@ -41,15 +40,15 @@ public class FirmwareDao {
             List<String> msg_tws = firmwareVersionModel.getMsg_tw();
 
             for (String msgCN : msgs) {
-                firmwareDB.getMsgCNList().add(msgCN);
+                firmwareDB.getMsgCNList().add(new FeatureMessageItem(msgCN));
             }
 
             for (String msgTW: msg_tws){
-                firmwareDB.getMsgTWList().add(msgTW);
+                firmwareDB.getMsgTWList().add(new FeatureMessageItem(msgTW));
             }
 
             for (String msgEN : msg_ens) {
-                firmwareDB.getMsgEnList().add(msgEN);
+                firmwareDB.getMsgEnList().add(new FeatureMessageItem(msgEN));
             }
 
             realm.copyToRealm(firmwareDB);

@@ -1,5 +1,7 @@
 package com.jephy.retrofitpracticedemo;
 
+import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+
 import java.util.List;
 
 /**

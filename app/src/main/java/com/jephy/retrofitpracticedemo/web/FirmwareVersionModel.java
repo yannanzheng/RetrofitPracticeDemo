@@ -1,4 +1,4 @@
-package com.jephy.retrofitpracticedemo;
+package com.jephy.retrofitpracticedemo.web;
 
 import java.util.List;
 

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         FirmwareVersionModel firmwareVersionModel = firmwareVersionModelList.get(position);
         holder.deviceModelName.setText(firmwareVersionModel.getProductmodel());
         holder.version.setText(firmwareVersionModel.getLatestVersion());
-        final List<String> msg = firmwareVersionModel.msg;
+        final List<String> msg = firmwareVersionModel.getMsg();
 
         showNewFeatureItems(holder, msg, true);
         holder.setOnSubItemClickListener(new MyViewHolder.OnSubItemClickListener() {

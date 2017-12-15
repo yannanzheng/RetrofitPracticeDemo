@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.jephy.retrofitpracticedemo.web.FirmwareVersionModel;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FirmwareUpdateView{
@@ -29,9 +31,15 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
     }
 
     @Override
-    public void onUpdateInfoFetched(List<FirmwareVersionModel> firmwareVersionModelList) {
-        mAdapter.setNewData(firmwareVersionModelList);
-        mAdapter.notifyDataSetChanged();
+    public void onUpdateInfoFetched(final List<FirmwareVersionModel> firmwareVersionModelList) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setNewData(firmwareVersionModelList);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
 }
