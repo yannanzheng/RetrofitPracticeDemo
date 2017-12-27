@@ -41,12 +41,15 @@ public class FirmwareDao {
 
     }
 
-    public static List<FirmwareDB> findAll() {
+    public static List<Firmware> findAll() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<FirmwareDB> firmwareDBS = realm.where(FirmwareDB.class).findAll();
-        if (firmwareDBS != null) {
-            List<FirmwareDB> firmwareVersionModelList = new ArrayList<>();
-            firmwareVersionModelList.addAll(firmwareDBS);
+        RealmResults<FirmwareDB> firmwareDBList = realm.where(FirmwareDB.class).findAll();
+        if (firmwareDBList != null) {
+            List<Firmware> firmwareVersionModelList = new ArrayList<>();
+            for (FirmwareDB firmwareDB:firmwareDBList){
+                Firmware firmware = new Firmware().copyFieldFrom(firmwareDB);
+                firmwareVersionModelList.add(firmware);
+            }
             return firmwareVersionModelList;
         }
 

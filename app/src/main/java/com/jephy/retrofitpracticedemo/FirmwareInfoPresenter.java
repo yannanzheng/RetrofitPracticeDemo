@@ -40,11 +40,12 @@ class FirmwareInfoPresenter {
 
                         FirmwareDao.saveOrUpdateAllFirmwareInfo(firmwareList);
 
-                        List<FirmwareDB> firmwareDBList = FirmwareDao.findAll();
+                        List<Firmware> firmwares = FirmwareDao.findAll();
 
+                        Log.d(TAG, "firmwares = " + firmwares);
                         FirmwareUpdateView view = mViewReference.get();
                         if (null != view) {
-                            view.onUpdateInfoFetched(firmwareDBList);
+                            view.onUpdateInfoFetched(firmwares);
                         }
 
                         Log.d(TAG, "versionModelList = " + firmwareList);

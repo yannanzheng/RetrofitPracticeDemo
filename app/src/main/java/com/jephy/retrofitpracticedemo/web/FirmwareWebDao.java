@@ -2,6 +2,7 @@ package com.jephy.retrofitpracticedemo.web;
 
 import android.util.Log;
 
+import com.jephy.retrofitpracticedemo.BuildConfig;
 import com.jephy.retrofitpracticedemo.model.Firmware;
 
 import java.io.IOException;
@@ -22,7 +23,9 @@ public class FirmwareWebDao {
 
     public static List<Firmware> requestFirmwareInfoSync() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.77:100/")
+//                .baseUrl("http://192.168.0.77:100/")
+//                .baseUrl("http://download.evomotion.com")
+                .baseUrl(BuildConfig.SERVER_DOWNLOAD_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

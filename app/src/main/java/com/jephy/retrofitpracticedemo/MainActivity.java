@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jephy.retrofitpracticedemo.db.FirmwareDB;
+import com.jephy.retrofitpracticedemo.model.Firmware;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements FirmwareUpdateVie
     }
 
     @Override
-    public void onUpdateInfoFetched(final List<FirmwareDB> firmwareDBList) {
+    public void onUpdateInfoFetched(final List<Firmware> firmwareDBList) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

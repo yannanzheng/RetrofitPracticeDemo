@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'evoclient'
+            keyPassword 'ilooyo2014fz'
+            storeFile file('/Users/jfyang/Documents/demo/RetrofitPracticeDemo/key.jks')
+            storePassword 'ilooyo2014fz'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.jephy.retrofitpracticedemo"
@@ -10,28 +18,36 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
+            buildConfigField("String", "SERVER_DOWNLOAD_URL", '"http://download.evomotion.com"');
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug{
+            buildConfigField("String", "SERVER_DOWNLOAD_URL", '"http://192.168.0.77:100"');
+        }
+    }
+    productFlavors {
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     //日志拦截器
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
-    compile 'io.reactivex:rxjava:1.2.4'
+    compile 'io.reactivex:rxjava:1.3.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'

@@ -1,6 +1,12 @@
 package com.jephy.retrofitpracticedemo.model;
 
+import com.jephy.retrofitpracticedemo.db.FeatureMessageItem;
+import com.jephy.retrofitpracticedemo.db.FirmwareDB;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * Created by jfyang on 12/14/17.
@@ -17,6 +23,37 @@ public class Firmware {
     List<String> msg_tw;
     List<String> msg_en;
     String md5;
+
+    public Firmware copyFieldFrom(FirmwareDB firmwareDB) {
+        setProductnum(firmwareDB.getProductnum());
+        setProductmodel(firmwareDB.getProductmodel());
+
+        setSubproductmodel(firmwareDB.getSubproductmodel());
+        setBaseline(firmwareDB.getBaseline());
+        setLatestVersion(firmwareDB.getLatestVersion());
+
+        setMd5(firmwareDB.getMd5());
+        setUrl(firmwareDB.getUrl());
+
+        RealmList<FeatureMessageItem> msgCNList = firmwareDB.getMsgCNList();
+        RealmList<FeatureMessageItem> msgEnList = firmwareDB.getMsgEnList();
+        RealmList<FeatureMessageItem> msgTWList = firmwareDB.getMsgTWList();
+
+        msg = new ArrayList<>();
+        msg_en = new ArrayList<>();
+        msg_tw = new ArrayList<>();
+
+        addMessage(msg,msgCNList);
+        addMessage(msg_en,msgEnList);
+        addMessage(msg_tw,msgTWList);
+        return this;
+    }
+
+    private void addMessage(List<String> msgList, RealmList<FeatureMessageItem> msgDBList) {
+        for (FeatureMessageItem featureMessageItem : msgDBList) {
+            msgList.add(featureMessageItem.getMsg());
+        }
+    }
 
     public String getProductnum() {
         return productnum;

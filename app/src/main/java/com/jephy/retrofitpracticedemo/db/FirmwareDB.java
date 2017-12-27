@@ -150,7 +150,7 @@ public class FirmwareDB extends RealmObject {
                 '}';
     }
 
-    public void copyFieldFrom(Firmware firmware) {
+    public FirmwareDB copyFieldFrom(Firmware firmware) {
         setProductnum(firmware.getProductnum());
         setProductmodel(firmware.getProductmodel());
         setSubproductmodel(firmware.getSubproductmodel());
@@ -165,6 +165,7 @@ public class FirmwareDB extends RealmObject {
         addMessage(msgCNList,msgStringList);
         addMessage(msgEnList,msgEnStringList);
         addMessage(msgTWList,msgTWStringList);
+        return this;
     }
 
     private void addMessage(RealmList msgDBList, List<String> msgList) {
